@@ -9,20 +9,17 @@
         }
         public function store(){
 
-            $nombre_usuario = $_POST['nombre_usuario'];
+            $nombre= $_POST['nombre'];
             $correo = $_POST['correo'];
             $pass = md5($_POST['pass']);
-            $foto_perfil = 'assets/img/default_user.jpg';
-            date_default_timezone_set('America/Bogota');
-            $fecha = date('Y-m-d');
             $verify = parent::verify($correo);
             
             if($correo == @$verify->correo){
-                header('location:?class=Login&view=login&error=error');            
+                header('location:?class=Login&view=login&yaExiste');            
             }else{
-                parent::stored($nombre_usuario,$correo,$pass,$foto_perfil,$fecha);
+                parent::stored($nombre,$correo,$pass);
             
-                header('location:?class=Login&view=login&success=success');
+                header('location:?class=Login&view=login&success');
             }
 
              

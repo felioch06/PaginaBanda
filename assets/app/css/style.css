@@ -1,3 +1,67 @@
+body{
+    background-color: rgb(235, 235, 235);
+}
+/* sidebar */
 .ui .segment{
     background-color: rgb(71, 71, 71);
 }
+
+.ui .item{
+    padding: 20px 20px !important;
+}
+
+/* fin sidebar */
+
+/* Login */
+
+.bluee{
+    background: linear-gradient(to bottom, #565D7D, #2F375E) !important;
+    padding: 50px 20px !important;
+    margin-top: 35% !important;
+}
+
+.letter-white{
+    color: white !important;
+}
+
+.letter-gray{
+    color: #BDC0B8 !important;
+}
+
+.input-login{
+    background-color: #6E738F !important;
+    border-radius: 50px !important;
+    color: white !important;
+}
+
+.input-login:focus{
+    color: white !important;
+}
+
+.btn-login{
+    background-color: #1059FF !important;
+    color: white !important;
+    border-radius: 50px !important;
+    width: 80% !important;
+}
+
+
+.login-button{
+    font-size: 20px;
+    margin: 10px 10px 0px 10px;
+    cursor: pointer;
+}
+
+.login-button:hover{
+    color: rgb(223, 222, 222) !important;
+    border-bottom: solid 2px #1059FF;
+    transition: .2s;
+}
+
+.hidden{  
+    display: none !important;
+}
+
+/* Login */
+
+    
