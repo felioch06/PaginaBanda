@@ -6,6 +6,8 @@ $('#menu').click(function(){
 
 
 //modal
+
+//canciones
 $('#modal-add-cancion').click(function(){
     $('.ui.agregar.modal')
     .modal('show')
@@ -31,6 +33,23 @@ $('.modal-eliminar-cancion').click(function(){
     })
 })
 
+$('.modal-actualizar-cancion').click(function(){
+    var data = $(this).attr('data-id');
+
+    $.ajax({
+        type: 'post',
+        url: '?class=Usuarios&view=actualizarCancion',
+        data: {id:data},
+        success(response){
+            $('#responseActualizarCancion').html(response);
+            $('.ui.actualizar.modal').modal('show');
+        }
+    })
+
+    
+})
+
+// fin canciones
 //fin modal
 
 //Login

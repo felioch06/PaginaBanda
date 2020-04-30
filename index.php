@@ -1,8 +1,8 @@
 <?php
     require_once('core/core.php');
 
-    $class = isset($_REQUEST['class'])? $_REQUEST['class']: 'Usuarios';
-    $view = isset($_REQUEST['view'])? $_REQUEST['view']: 'index';
+    $class = isset($_REQUEST['class'])? $_REQUEST['class']: 'Login';
+    $view = isset($_REQUEST['view'])? $_REQUEST['view']: 'login';
 
     $class= $class.'Controller';
 

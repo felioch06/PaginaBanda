@@ -64,4 +64,9 @@ body{
 
 /* Login */
 
-    
+/* Canciones */
+
+.terminada{
+    background-color: rgb(202, 250, 129) !important;
+}
+/* fin Canciones */

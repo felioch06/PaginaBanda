@@ -37,6 +37,47 @@
 
         }
 
+        public function actualizarCancion(){
+            $cancion = parent::buscarCancion($_POST['id']);
+            ?>
+                <div class="header">Actualizar Canción</div>
+                <div class="content">
+                    <form action="?class=Usuarios&view=updateCanciones" method="post">
+
+                        <div class="ui fluid icon input">
+                            <input type="text" value="<?php echo $cancion->nombre_cancion ?>" name="nombre_cancion" placeholder="Nombre de la Canción" required>
+                            <input type="hidden" value="<?php echo $cancion->id_cancion ?>" name="id_cancion">
+                        </div>
+                        <br><br>
+                            <button type="submit" class="ui green button">Agragar</button>
+                            <div class="ui red cancel button">Cancel</div>
+                    </form>
+                </div>
+                
+            <?php
+        }
+
+        public function updateCanciones(){
+            $nombre_cancion = $_POST['nombre_cancion'];
+            $id_cancion = $_POST['id_cancion'];
+
+            parent::updatedCanciones($nombre_cancion,$id_cancion);
+            header('location:?class=Usuarios&view=canciones');
+        }
+
+        public function actualizarEstadoCancion(){
+            $id_cancion = $_REQUEST['id'];
+            $cancion = parent::buscarCancion($id_cancion);
+
+            if($cancion->estado == 1){
+                parent::updateEstado(0,$id_cancion);
+                header('location:?class=Usuarios&view=canciones');
+            }else{
+                parent::updateEstado(1,$id_cancion);
+                header('location:?class=Usuarios&view=canciones');
+            }
+        }
+
         //fin Canciones
 
         public function anotaciones(){
