@@ -1,9 +1,13 @@
 body{
     background-color: rgb(235, 235, 235);
 }
+
+.pd-y{
+    padding: 190px 0px !important;
+}
 /* sidebar */
-.ui .segment{
-    background-color: rgb(71, 71, 71);
+.banner{
+    background-color: rgb(71, 71, 71) !important;
 }
 
 .ui .item{

@@ -1,6 +1,17 @@
 <?php
     class LoginController extends Login{
 
+        private $security;
+
+        public function __construct(){
+            try{
+                $this->security = new Security();
+                $this->security->validar_sesion_login();
+            }catch(Exception $e){
+                die($e->getMessage());
+            }
+        }
+
         public function login(){
             $title = 'Login';
             require_once('views/login/login.php');

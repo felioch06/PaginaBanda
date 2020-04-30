@@ -50,6 +50,50 @@ $('.modal-actualizar-cancion').click(function(){
 })
 
 // fin canciones
+
+//anotaciones
+$('#modal-add-anotacion').click(function(){
+    $('.ui.agregar.modal')
+    .modal('show')
+    ;
+})
+
+$('.modal-eliminar-anotacion').click(function(){
+    $('.ui.eliminar.basic.modal')
+    .modal('show')
+    ;
+
+    var data = $(this).attr('data-id');
+
+    $('.eliminar-anotacion').click(function(){
+        $.ajax({
+            type: 'post',
+            url : '?class=Usuarios&view=eliminarAnotacion',
+            data :{id:data},
+            success(){
+                location.reload()
+            }
+         });
+    })
+})
+
+$('.modal-actualizar-anotacion').click(function(){
+    var data = $(this).attr('data-id');
+
+    $.ajax({
+        type: 'post',
+        url: '?class=Usuarios&view=actualizarAnotacion',
+        data: {id:data},
+        success(response){
+            $('#responseActualizarAnotacion').html(response);
+            $('.ui.actualizar.modal').modal('show');
+        }
+    })
+
+    
+})
+
+//fin anotaciones
 //fin modal
 
 //Login
