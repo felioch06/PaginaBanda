@@ -190,6 +190,65 @@
 
 
         //Fin letras
+
+        //partituras
+        public function storedPartituras($imagen_partitura,$comentario,$fk_cancion,$fk_usuario){
+            try{
+                $str = parent::conectar()->prepare("INSERT INTO partituras(imagen_partitura,comentario,fk_cancion, fk_usuario) VALUES (?,?,?,?) ");
+                $str->bindParam(1,$imagen_partitura,PDO::PARAM_STR);
+                $str->bindParam(2,$comentario,PDO::PARAM_STR);
+                $str->bindParam(3,$fk_cancion,PDO::PARAM_INT);
+                $str->bindParam(4,$fk_usuario,PDO::PARAM_INT);
+                $str->execute();
+            }catch(Exception $e){
+                die('mal'.$e->getMessage());
+            }
+        }
+
+        public function consultarPartituras(){
+            try{
+                $str = parent::conectar()->prepare("SELECT * FROM partituras INNER JOIN usuarios ON usuarios.id_usuario = partituras.fk_usuario INNER JOIN canciones ON canciones.id_cancion = partituras.fk_cancion ORDER BY fk_cancion ASC");
+                $str->execute();
+                return $str->fetchAll(PDO::FETCH_OBJ);
+            }catch(Exception $e){
+                die('mal'.$e->getMessage());
+            }
+        }
+
+        public function buscarPartitura($id){
+            try{
+                $str = parent::conectar()->prepare("SELECT * FROM partituras  INNER JOIN canciones ON canciones.id_cancion = partituras.fk_cancion WHERE id_partitura = $id ");
+                $str->execute();
+                return $str->fetch(PDO::FETCH_OBJ);
+            }catch(Exception $e){
+                die('mal'.$e->getMessage());
+            }
+        }
+
+        public function deletePartituras($id){
+            try{
+                $str = parent::conectar()->prepare("DELETE FROM partituras WHERE id_partitura = $id");
+                $str->execute();
+            }catch(Exception $e){
+                die('mal'.$e->getMessage());
+            }
+        }
+
+        public function updatedPartituras($imagen_partitura,$comentario,$fk_cancion,$id_partitura){
+            try{
+                $str = parent::conectar()->prepare("UPDATE partituras SET imagen_partitura = ?, comentario = ?, fk_cancion = ? WHERE id_partitura = ?");
+                $str->bindParam(1,$imagen_partitura,PDO::PARAM_STR);
+                $str->bindParam(2,$comentario,PDO::PARAM_STR);
+                $str->bindParam(3,$fk_cancion,PDO::PARAM_INT);
+                $str->bindParam(4,$id_partitura,PDO::PARAM_INT);
+                $str->execute();
+            }catch(Exception $e){
+                die('mal'.$e->getMessage());
+            }
+        }
+
+
+        //Fin partituras
         
     }
 ?>

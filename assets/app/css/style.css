@@ -10,6 +10,34 @@ body{
     font-size: 40px;
     color: white !important;
 }
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: #1059FF;
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px !important;
+    transition: .5s;
+    border-radius: 10px;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: rgb(33, 88, 216) ;
+    transition: .5s;
+}
+
 /* sidebar */
 .banner{
     background-color: rgb(71, 71, 71) !important;

@@ -63,7 +63,7 @@
                                         </div>
                                 </div>
                                 <div class="actions">
-                                    <button type="submit" class="ui green button">Agragar</button>
+                                    <button type="submit" class="ui green button">Agregar</button>
                                     </form>
                                     <div class="ui red cancel button">Cancel</div>
                                 </div>

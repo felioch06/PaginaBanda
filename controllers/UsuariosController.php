@@ -140,7 +140,7 @@
 
         //fin anotaciones
 
-        //Letras
+        //letras
 
         public function letras(){
             $title = 'Letras';
@@ -215,18 +215,97 @@
 
         //fin Letras
 
+        //partituras
+
+        public function partituras(){
+            $title = 'partituras';
+            require_once('views/usuario/partituras.php');
+        }
+        public function storePartituras(){
+            $comentario = $_POST['comentario'];
+            $fk_cancion = $_POST['fk_cancion'];
+            $fk_usuario = $_SESSION['nombres']->id_usuario;
+
+            $route = "assets/img/partituras/";
+            $name_file = $_FILES['file']['name'];
+            $tpm_name = $_FILES['file']['tmp_name'];
+            $imagen_partitura = 'assets/img/partituras/'.$name_file;
+            move_uploaded_file($tpm_name,'assets/img/partituras/'. $name_file);
+
+            parent::storedPartituras($imagen_partitura, $comentario, $fk_cancion, $fk_usuario);
+            header('location:?class=Usuarios&view=partituras');
+        }
+
+        public function eliminarPartitura(){
+            $id_partitura=$_POST['id'];
+            
+            $partitura = parent::buscarPartitura($id_partitura);
+            parent::deletePartituras($id_partitura);
+
+        }
+
+        public function actualizarPartitura(){
+            $partitura = parent::buscarPartitura($_POST['id']);
+            ?>
+<i class="close icon"></i>
+<div class="header">Actualizar partitura</div>
+<div class="content">
+    <form action="?class=Usuarios&view=updatepartituras" method="post" enctype="multipart/form-data">
+        <div class="ui form">
+            <div class="field">
+                <select name="fk_cancion" class="" id="">
+                    <?php
+                        $canciones = parent::consultarCanciones();
+                        foreach($canciones as $cancion){
+                    ?>
+                    <option value="<?php echo $cancion->id_cancion ?>">
+                        <?php echo $cancion->nombre_cancion ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="ui fluid icon input">
+            <textarea name="comentario" cols="1000" rows="10" required
+                placeholder="Agregar Anotación"> <?php echo $partitura->comentario ?></textarea>
+
+            <input type="hidden" value="<?php echo $partitura->id_partitura ?>" name="id_partitura">
+        </div>
+        <br>
+        <input type="file" name="imagen" id="file" class="inputfile" />
+        <label for="file"> <i class="ui upload icon"></i> Elegir Partitura</label>
+        <br><br>
+        <button type="submit" class="ui green button">Actualizar</button>
+    </form>
+</div>
+
+<?php
+        }
+
+        public function updatePartituras(){
+            
+            $comentario = $_POST['comentario'];
+            $fk_cancion = $_POST['fk_cancion'];
+            $id_partitura = $_POST['id_partitura'];
+            
+            $route = "assets/img/partituras/";
+            $name_file = $_FILES['imagen']['name'];
+            $tpm_name = $_FILES['imagen']['tmp_name'];
+            $imagen_partitura = 'assets/img/partituras/'.$name_file;
+            move_uploaded_file($tpm_name,'assets/img/partituras/'. $name_file);
+
+            echo $name_file;
+            echo $tpm_name;
+            echo $imagen_partitura;
+        }
+
+        //fin partituras
+
         
 
         public function album(){
             $title = 'Album';
             require_once('views/usuario/album.php');
-        }
-
-        
-        
-        public function partituras(){
-            $title = 'Partituras';
-            require_once('views/usuario/partituras.php');
         }
         
     }

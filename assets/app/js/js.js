@@ -141,6 +141,50 @@ $('.modal-actualizar-letra').click(function(){
 })
 
 //fin letras
+
+//partituras
+$('#modal-add-partitura').click(function(){
+    $('.ui.agregar.modal')
+    .modal('show')
+    ;
+})
+
+$('.modal-eliminar-partitura').click(function(){
+    $('.ui.eliminar.basic.modal')
+    .modal('show')
+    ;
+
+    var data = $(this).attr('data-id');
+
+    $('.eliminar-partitura').click(function(){
+        $.ajax({
+            type: 'post',
+            url : '?class=Usuarios&view=eliminarPartitura',
+            data :{id:data},
+            success(){
+                location.reload()
+            }
+         });
+    })
+})
+
+$('.modal-actualizar-partitura').click(function(){
+    var data = $(this).attr('data-id');
+
+    $.ajax({
+        type: 'post',
+        url: '?class=Usuarios&view=actualizarPartitura',
+        data: {id:data},
+        success(response){
+            $('#responseActualizarPartitura').html(response);
+            $('.ui.actualizar.modal').modal('show');
+        }
+    })
+
+    
+})
+
+//fin partituras
 //fin modal
 
 //Login
