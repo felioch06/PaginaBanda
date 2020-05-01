@@ -35,10 +35,11 @@
                                         ?>
                                         <tr class="<?php if($cancion->estado == 1){  echo 'terminada'; } ?>">
                                             <td><?php echo $cancion->nombre ?></td>
-                                            
+
                                             <td><?php echo $cancion->nombre_cancion ?></td>
                                             <td class="ui center aligned">
-                                                <a href="?class=Usuarios&view=actualizarEstadoCancion&id=<?php echo $cancion->id_cancion ?>" class="ui green button terminar-cancion"
+                                                <a href="?class=Usuarios&view=actualizarEstadoCancion&id=<?php echo $cancion->id_cancion ?>"
+                                                    class="ui green button terminar-cancion"
                                                     data-id="<?php echo $cancion->id_cancion ?>">Terminada</a>
                                                 <button class="ui blue button modal-actualizar-cancion"
                                                     data-id="<?php echo $cancion->id_cancion ?>">Actualizar</button>

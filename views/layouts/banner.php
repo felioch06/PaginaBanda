@@ -1,26 +1,26 @@
 <div class="ui sidebar inverted vertical menu">
     <h2 class="item">
-      FIVE LOST MIND
+        FIVE LOST MIND
     </h2>
     <a href="?class=Usuarios&view=canciones" class="item">
-      Canciones
+        Canciones
     </a>
     <a href="?class=Usuarios&view=anotaciones" class="item">
-      Anotaciones
+        Anotaciones
     </a>
     <a href="?class=Usuarios&view=letras" class="item">
-      Letras
+        Letras
     </a>
     <a href="?class=Usuarios&view=partituras" class="item">
-      Partituras
+        Partituras
     </a>
     <a href="?class=Usuarios&view=album" class="item">
-      Album
+        Album
     </a>
     <a href="?class=Usuarios&view=banda" class="item">
-      Banda
+        Banda
     </a>
     <a href="?class=Security&view=salir" class="item">
-      SALIR
+        SALIR
     </a>
-  </div>
+</div>

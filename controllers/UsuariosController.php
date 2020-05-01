@@ -218,7 +218,7 @@
         //partituras
 
         public function partituras(){
-            $title = 'partituras';
+            $title = 'Partituras';
             require_once('views/usuario/partituras.php');
         }
         public function storePartituras(){
@@ -238,7 +238,8 @@
 
         public function eliminarPartitura(){
             $id_partitura=$_POST['id'];
-            
+            $imagen_anterior = parent::buscarPartitura($id_partitura);
+            unlink($imagen_anterior->imagen_partitura);
             $partitura = parent::buscarPartitura($id_partitura);
             parent::deletePartituras($id_partitura);
 
@@ -254,6 +255,8 @@
         <div class="ui form">
             <div class="field">
                 <select name="fk_cancion" class="" id="">
+                    <option value="<?php echo $partitura->id_cancion ?>">
+                        <?php echo $partitura->nombre_cancion ?></option>
                     <?php
                         $canciones = parent::consultarCanciones();
                         foreach($canciones as $cancion){
@@ -272,8 +275,8 @@
             <input type="hidden" value="<?php echo $partitura->id_partitura ?>" name="id_partitura">
         </div>
         <br>
-        <input type="file" name="imagen" id="file" class="inputfile" />
-        <label for="file"> <i class="ui upload icon"></i> Elegir Partitura</label>
+        <input type="file" name="imagen" id="imagen" class="inputfile" />
+        <label for="imagen"> <i class="ui upload icon"></i> Elegir Partitura</label>
         <br><br>
         <button type="submit" class="ui green button">Actualizar</button>
     </form>
@@ -293,10 +296,17 @@
             $tpm_name = $_FILES['imagen']['tmp_name'];
             $imagen_partitura = 'assets/img/partituras/'.$name_file;
             move_uploaded_file($tpm_name,'assets/img/partituras/'. $name_file);
-
-            echo $name_file;
-            echo $tpm_name;
-            echo $imagen_partitura;
+            $imagen_anterior = parent::buscarPartitura($id_partitura);
+            
+            if($imagen_partitura == 'assets/img/partituras/'){
+                parent::updatedPartituras($imagen_anterior->imagen_partitura,$comentario,$fk_cancion,$id_partitura);
+                header('location:?class=Usuarios&view=partituras');
+            }else{
+                unlink($imagen_anterior->imagen_partitura);
+                parent::updatedPartituras($imagen_partitura,$comentario,$fk_cancion,$id_partitura);
+                header('location:?class=Usuarios&view=partituras');
+            }
+            
         }
 
         //fin partituras

@@ -70,7 +70,7 @@
                                 </div>
 
                                 <br>
-                                <input type="file" name="file" id="file" class="inputfile" />
+                                <input type="file" name="file" id="file" class="inputfile" required />
                                 <label for="file"> <i class="ui upload icon"></i> Elegir Partitura</label>
                         </div>
                         <div class="actions">
