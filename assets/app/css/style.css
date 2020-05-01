@@ -5,6 +5,11 @@ body{
 .pd-y{
     padding: 190px 0px !important;
 }
+
+.titulos{
+    font-size: 40px;
+    color: white !important;
+}
 /* sidebar */
 .banner{
     background-color: rgb(71, 71, 71) !important;

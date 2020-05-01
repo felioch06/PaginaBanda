@@ -1,4 +1,5 @@
 <?php
+
     class Register extends DB{
 
         public function verify($correo){

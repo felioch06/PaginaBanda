@@ -19,7 +19,7 @@
 
         public function auth(){
             $correo = $_POST['correo'];
-            $pass = md5($_POST['pass']);
+            $pass = $this->security->encrypt($_POST['pass']);
 
             $usuario = parent::verify($correo, $pass);
 

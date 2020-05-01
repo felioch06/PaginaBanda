@@ -23,10 +23,11 @@
             require_once('views/usuario/canciones.php');
         }
         public function storeCanciones(){
-            $anotacion = $_POST['anotacion'];
+            $cancion = $_POST['nombre_cancion'];
+            $cancionVerificado = $this->security->string($cancion);
             $fk_usuario = $_SESSION['nombres']->id_usuario;
 
-            parent::storedCanciones($anotacion, $fk_usuario);
+            parent::storedCanciones($cancionVerificado, $fk_usuario);
             header('location:?class=Usuarios&view=canciones');
         }
 
@@ -40,6 +41,7 @@
         public function actualizarCancion(){
             $cancion = parent::buscarCancion($_POST['id']);
             ?>
+<i class="close icon"></i>
 <div class="header">Actualizar Canción</div>
 <div class="content">
     <form action="?class=Usuarios&view=updateCanciones" method="post">
@@ -51,7 +53,6 @@
         </div>
         <br><br>
         <button type="submit" class="ui green button">Agragar</button>
-        <div class="ui red cancel button">Cancel</div>
     </form>
 </div>
 
@@ -106,6 +107,7 @@
         public function actualizarAnotacion(){
             $anotacion = parent::buscarAnotacion($_POST['id']);
             ?>
+<i class="close icon"></i>
 <div class="header">Actualizar Anotacion</div>
 <div class="content">
     <form action="?class=Usuarios&view=updateanotaciones" method="post">
@@ -115,13 +117,12 @@
         </div>
         <br>
         <div class="ui fluid icon input">
-            <textarea name="anotacion"  cols="1000" rows="10" required
+            <textarea name="anotacion" cols="1000" rows="10" required
                 placeholder="Agregar Anotación"> <?php echo $anotacion->anotacion ?></textarea>
             <input type="hidden" value="<?php echo $anotacion->id_anotacion ?>" name="id_anotacion">
         </div>
         <br><br>
         <button type="submit" class="ui green button">Actualizar</button>
-        <div class="ui red cancel button">Cancel</div>
     </form>
 </div>
 
@@ -139,6 +140,81 @@
 
         //fin anotaciones
 
+        //Letras
+
+        public function letras(){
+            $title = 'Letras';
+            require_once('views/usuario/letras.php');
+        }
+        public function storeLetras(){
+            $letra = $_POST['letra'];
+            $fk_cancion = $_POST['fk_cancion'];
+            $fk_usuario = $_SESSION['nombres']->id_usuario;
+
+            parent::storedLetras($letra,$fk_cancion, $fk_usuario);
+            parent::updateLetraDisponible(1,$fk_cancion);
+            header('location:?class=Usuarios&view=letras');
+        }
+
+        public function eliminarLetra(){
+            $id_letra=$_POST['id'];
+            
+            $letra = parent::buscarletra($id_letra);
+            parent::updateLetraDisponible(0,$letra->fk_cancion);
+            parent::deleteLetras($id_letra);
+
+        }
+
+        public function actualizarLetra(){
+            $letra = parent::buscarLetra($_POST['id']);
+            ?>
+<i class="close icon"></i>
+<div class="header">Actualizar letra</div>
+<div class="content">
+    <form action="?class=Usuarios&view=updateLetras" method="post">
+        <div class="ui form">
+            <div class="field">
+                <select name="fk_cancion" class="" id="">
+                    <?php
+                        $canciones = parent::consultarCanciones();
+                        foreach($canciones as $cancion){
+                    ?>
+                    <option value="<?php echo $cancion->id_cancion ?>">
+                        <?php echo $cancion->nombre_cancion ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="ui fluid icon input">
+            <textarea name="letra" cols="1000" rows="10" required
+                placeholder="Agregar Anotación"> <?php echo $letra->letra ?></textarea>
+            <input type="hidden" value="<?php echo $letra->id_letra ?>" name="id_letra">
+            <input type="hidden" value="<?php echo $letra->fk_cancion ?>" name="fk_cancion_anterior">
+        </div>
+        <br><br>
+        <button type="submit" class="ui green button">Actualizar</button>
+    </form>
+</div>
+
+<?php
+        }
+
+        public function updateLetras(){
+            
+            $letra = $_POST['letra'];
+            $fk_cancion = $_POST['fk_cancion'];
+            $fk_cancion_anterior = $_POST['fk_cancion_anterior'];
+            $id_letra = $_POST['id_letra'];
+            
+            parent::updateLetraDisponible(0,$fk_cancion_anterior);
+            parent::updateLetraDisponible(1,$fk_cancion);
+            parent::updatedLetras($letra,$fk_cancion,$id_letra);
+            header('location:?class=Usuarios&view=letras');
+        }
+
+        //fin Letras
+
         
 
         public function album(){
@@ -146,10 +222,7 @@
             require_once('views/usuario/album.php');
         }
 
-        public function letras(){
-            $title = 'Letras';
-            require_once('views/usuario/letras.php');
-        }
+        
         
         public function partituras(){
             $title = 'Partituras';

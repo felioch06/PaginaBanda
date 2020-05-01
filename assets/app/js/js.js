@@ -4,6 +4,9 @@ $('#menu').click(function(){
     ;
 })
 
+$('.ui.accordion')
+  .accordion()
+;
 
 //modal
 
@@ -94,6 +97,50 @@ $('.modal-actualizar-anotacion').click(function(){
 })
 
 //fin anotaciones
+
+//letras
+$('#modal-add-letra').click(function(){
+    $('.ui.agregar.modal')
+    .modal('show')
+    ;
+})
+
+$('.modal-eliminar-letra').click(function(){
+    $('.ui.eliminar.basic.modal')
+    .modal('show')
+    ;
+
+    var data = $(this).attr('data-id');
+
+    $('.eliminar-letra').click(function(){
+        $.ajax({
+            type: 'post',
+            url : '?class=Usuarios&view=eliminarLetra',
+            data :{id:data},
+            success(){
+                location.reload()
+            }
+         });
+    })
+})
+
+$('.modal-actualizar-letra').click(function(){
+    var data = $(this).attr('data-id');
+
+    $.ajax({
+        type: 'post',
+        url: '?class=Usuarios&view=actualizarLetra',
+        data: {id:data},
+        success(response){
+            $('#responseActualizarLetra').html(response);
+            $('.ui.actualizar.modal').modal('show');
+        }
+    })
+
+    
+})
+
+//fin letras
 //fin modal
 
 //Login
