@@ -249,6 +249,65 @@
 
 
         //Fin partituras
+
+        //notas
+        public function storedNotas($grabacion,$comentario,$fk_cancion,$fk_usuario){
+            try{
+                $str = parent::conectar()->prepare("INSERT INTO notas(grabacion,comentario,fk_cancion, fk_usuario) VALUES (?,?,?,?) ");
+                $str->bindParam(1,$grabacion,PDO::PARAM_STR);
+                $str->bindParam(2,$comentario,PDO::PARAM_STR);
+                $str->bindParam(3,$fk_cancion,PDO::PARAM_INT);
+                $str->bindParam(4,$fk_usuario,PDO::PARAM_INT);
+                $str->execute();
+            }catch(Exception $e){
+                die('mal'.$e->getMessage());
+            }
+        }
+
+        public function consultarNotas(){
+            try{
+                $str = parent::conectar()->prepare("SELECT * FROM notas INNER JOIN usuarios ON usuarios.id_usuario = notas.fk_usuario INNER JOIN canciones ON canciones.id_cancion = notas.fk_cancion ORDER BY fk_cancion ASC");
+                $str->execute();
+                return $str->fetchAll(PDO::FETCH_OBJ);
+            }catch(Exception $e){
+                die('mal'.$e->getMessage());
+            }
+        }
+
+        public function buscarNota($id){
+            try{
+                $str = parent::conectar()->prepare("SELECT * FROM notas  INNER JOIN canciones ON canciones.id_cancion = notas.fk_cancion WHERE id_nota = $id ");
+                $str->execute();
+                return $str->fetch(PDO::FETCH_OBJ);
+            }catch(Exception $e){
+                die('mal'.$e->getMessage());
+            }
+        }
+
+        public function deleteNotas($id){
+            try{
+                $str = parent::conectar()->prepare("DELETE FROM notas WHERE id_nota = $id");
+                $str->execute();
+            }catch(Exception $e){
+                die('mal'.$e->getMessage());
+            }
+        }
+
+        public function updatedNotas($grabacion,$comentario,$fk_cancion,$id_nota){
+            try{
+                $str = parent::conectar()->prepare("UPDATE notas SET grabacion = ?, comentario = ?, fk_cancion = ? WHERE id_nota = ?");
+                $str->bindParam(1,$grabacion,PDO::PARAM_STR);
+                $str->bindParam(2,$comentario,PDO::PARAM_STR);
+                $str->bindParam(3,$fk_cancion,PDO::PARAM_INT);
+                $str->bindParam(4,$id_nota,PDO::PARAM_INT);
+                $str->execute();
+            }catch(Exception $e){
+                die('mal'.$e->getMessage());
+            }
+        }
+
+
+        //Fin notas
         
     }
 ?>

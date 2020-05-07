@@ -311,6 +311,100 @@
 
         //fin partituras
 
+        //notas
+
+        public function notas(){
+            $title = 'Grabaciones';
+            require_once('views/usuario/notas.php');
+        }
+        public function storeNotas(){
+            $comentario = $_POST['comentario'];
+            $fk_cancion = $_POST['fk_cancion'];
+            $fk_usuario = $_SESSION['nombres']->id_usuario;
+
+            $name_file = $_FILES['file']['name'];
+            $tpm_name = $_FILES['file']['tmp_name'];
+            $grabacion = 'assets/grabaciones/'.$name_file;
+            move_uploaded_file($tpm_name,'assets/grabaciones/'.$name_file);
+
+            parent::storedNotas($grabacion, $comentario, $fk_cancion, $fk_usuario);
+            header('location:?class=Usuarios&view=notas');
+        }
+
+        public function eliminarNota(){
+            $id_nota=$_POST['id'];
+            $imagen_anterior = parent::buscarNota($id_nota);
+            unlink($imagen_anterior->grabacion);
+            $nota = parent::buscarNota($id_nota);
+            parent::deleteNotas($id_nota);
+
+        }
+
+        public function actualizarNota(){
+            $nota = parent::buscarNota($_POST['id']);
+            ?>
+<i class="close icon"></i>
+<div class="header">Actualizar nota</div>
+<div class="content">
+    <form action="?class=Usuarios&view=updatenotas" method="post" enctype="multipart/form-data">
+        <div class="ui form">
+            <div class="field">
+                <select name="fk_cancion" class="" id="">
+                    <option value="<?php echo $nota->id_cancion ?>">
+                        <?php echo $nota->nombre_cancion ?></option>
+                    <?php
+                        $canciones = parent::consultarCanciones();
+                        foreach($canciones as $cancion){
+                    ?>
+                    <option value="<?php echo $cancion->id_cancion ?>">
+                        <?php echo $cancion->nombre_cancion ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="ui fluid icon input">
+            <textarea name="comentario" cols="1000" rows="10" required
+                placeholder="Agregar Anotación"> <?php echo $nota->comentario ?></textarea>
+
+            <input type="hidden" value="<?php echo $nota->id_nota ?>" name="id_nota">
+        </div>
+        <br>
+        <input type="file" name="imagen" id="imagen" class="inputfile" />
+        <label for="imagen"> <i class="ui upload icon"></i> Elegir Nota</label>
+        <br><br>
+        <button type="submit" class="ui green button">Actualizar</button>
+    </form>
+</div>
+
+<?php
+        }
+
+        public function updateNotas(){
+            
+            $comentario = $_POST['comentario'];
+            $fk_cancion = $_POST['fk_cancion'];
+            $id_nota = $_POST['id_nota'];
+            
+            $name_file = $_FILES['imagen']['name'];
+            $tpm_name = $_FILES['imagen']['tmp_name'];
+            $grabacion = 'assets/grabaciones/'.$name_file;
+            move_uploaded_file($tpm_name,'assets/grabaciones/'.$name_file);
+            $imagen_anterior = parent::buscarNota($id_nota);
+            
+            if($grabacion == 'assets/grabaciones/'){
+                parent::updatedNotas($imagen_anterior->grabacion,$comentario,$fk_cancion,$id_nota);
+                header('location:?class=Usuarios&view=notas');
+            }else{
+                unlink($imagen_anterior->grabacion);
+                parent::updatedNotas($grabacion,$comentario,$fk_cancion,$id_nota);
+                header('location:?class=Usuarios&view=notas');
+            }
+            
+        }
+
+        //fin notas
+
         
 
         public function album(){

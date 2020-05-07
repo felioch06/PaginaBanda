@@ -12,31 +12,33 @@
                     <div class="ui stackable container grid">
                         <div class="row">
                             <div class="sixteen wide column">
-                                <button id="modal-add-partitura" class="ui black button">Agregar Partitura</button>
+                                <button id="modal-add-nota" class="ui black button">Agregar Grabación</button>
                                 <br><br>
                                 <div class="ui styled fluid accordion">
 
                                     <?php
-                                        $partituras = parent::consultarPartituras();
-                                        foreach($partituras as $partitura){ 
+                                        $notas = parent::consultarNotas();
+                                        foreach($notas as $nota){ 
                                     ?>
                                     <div class="title">
                                         <i class="dropdown icon"></i>
-                                        <?php echo $partitura->nombre_cancion ?>
+                                        <?php echo $nota->nombre_cancion ?>
                                     </div>
                                     <div class="content">
                                         <p class="transition hidden">
-                                            <button class="ui blue button modal-actualizar-partitura"
-                                                data-id="<?php echo $partitura->id_partitura ?>">Actualizar</button>
-                                            <button class="ui red button modal-eliminar-partitura"
-                                                data-id="<?php echo $partitura->id_partitura ?>">Eliminar</button>
+                                            <button class="ui blue button modal-actualizar-nota"
+                                                data-id="<?php echo $nota->id_nota ?>">Actualizar</button>
+                                            <button class="ui red button modal-eliminar-nota"
+                                                data-id="<?php echo $nota->id_nota ?>">Eliminar</button>
 
                                             <div class="ui divider"></div>
-                                            <h2>Autor: <?php echo $partitura->nombre ?></h2>
-                                            <h3>Comentario: <?php echo $partitura->comentario ?></h3>
+                                            <h2>Autor: <?php echo $nota->nombre ?></h2>
+                                            <h3>Comentario: <?php echo $nota->comentario ?></h3>
                                             <div class="ui divider"></div>
 
-                                            <img src="<?php echo $partitura->imagen_partitura ?>" alt="" width="100%">
+                                            <audio controls autoplay>
+                                                <source src="<?php echo $nota->grabacion ?>">
+                                            </audio>
                                         </p>
                                     </div>
                                     <?php } ?>
@@ -45,11 +47,11 @@
                         </div>
                     </div>
 
-                    <!-- Modal Agregar partituras -->
-                    <div class=" ui agregar modal">
-                        <div class="header">Agregar Nueva Partitura</div>
+                    <!-- Modal Agregar notas -->
+                    <div class="ui agregar modal">
+                        <div class="header">Agregar Nueva Grabación</div>
                         <div class="content">
-                            <form action="?class=Usuarios&view=storePartituras" method="post"
+                            <form action="?class=Usuarios&view=storeNotas" method="post"
                                 enctype="multipart/form-data">
                                 <div class="ui form">
                                     <div class="field">
@@ -72,7 +74,7 @@
 
                                 <br>
                                 <input type="file" name="file" id="file" class="inputfile" required />
-                                <label for="file"> <i class="ui upload icon"></i> Elegir Partitura</label>
+                                <label for="file"> <i class="ui upload icon"></i> Elegir Grabación</label>
                         </div>
                         <div class="actions">
                             <button type="submit" class="ui green button">Agregar</button>
@@ -80,25 +82,25 @@
                             <div class="ui red cancel button">Cancel</div>
                         </div>
                     </div>
-                    <!-- fin modal Agregar partituras -->
-                    <!-- Modal Actualizar partituras -->
-                    <div class="ui actualizar modal" id="responseActualizarPartitura">
+                    <!-- fin modal Agregar notas -->
+                    <!-- Modal Actualizar notas -->
+                    <div class="ui actualizar modal" id="responseActualizarNota">
 
                     </div>
-                    <!-- fin modal actualizar partituras -->
-                    <!-- modal Eliminar partituras -->
+                    <!-- fin modal actualizar notas -->
+                    <!-- modal Eliminar notas -->
                     <div class="ui eliminar basic modal">
                         <div class="ui icon header">
                             <i class="archive icon"></i>
-                            Eliminar partitura
+                            Eliminar nota
                         </div>
                         <div class="content">
-                            <p>¿Estás seguro que quieres eliminar esta partitura? si la eliminas no podrá ser
+                            <p>¿Estás seguro que quieres eliminar esta nota? si la eliminas no podrá ser
                                 recuperada y los de
                                 la banda se cagaran de todo</p>
                         </div>
                         <div class="actions">
-                            <div class="ui green ok inverted button eliminar-partitura">
+                            <div class="ui green ok inverted button eliminar-nota">
                                 <i class="checkmark icon"></i>
                                 Yes
                             </div>
@@ -108,7 +110,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- fin Modal Eliminar partituras -->
+                    <!-- fin Modal Eliminar notas -->
                 </div>
             </div>
         </div>

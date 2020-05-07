@@ -185,6 +185,50 @@ $('.modal-actualizar-partitura').click(function(){
 })
 
 //fin partituras
+
+//notas
+$('#modal-add-nota').click(function(){
+    $('.ui.agregar.modal')
+    .modal('show')
+    ;
+})
+
+$('.modal-eliminar-nota').click(function(){
+    $('.ui.eliminar.basic.modal')
+    .modal('show')
+    ;
+
+    var data = $(this).attr('data-id');
+
+    $('.eliminar-nota').click(function(){
+        $.ajax({
+            type: 'post',
+            url : '?class=Usuarios&view=eliminarNota',
+            data :{id:data},
+            success(){
+                location.reload()
+            }
+         });
+    })
+})
+
+$('.modal-actualizar-nota').click(function(){
+    var data = $(this).attr('data-id');
+
+    $.ajax({
+        type: 'post',
+        url: '?class=Usuarios&view=actualizarNota',
+        data: {id:data},
+        success(response){
+            $('#responseActualizarNota').html(response);
+            $('.ui.actualizar.modal').modal('show');
+        }
+    })
+
+    
+})
+
+//fin notas
 //fin modal
 
 //Login

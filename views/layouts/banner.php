@@ -20,6 +20,9 @@
     <a href="?class=Usuarios&view=banda" class="item">
         Banda
     </a>
+    <a href="?class=Usuarios&view=notas" class="item">
+        Grabaciones
+    </a>
     <a href="?class=Security&view=salir" class="item">
         SALIR
     </a>
